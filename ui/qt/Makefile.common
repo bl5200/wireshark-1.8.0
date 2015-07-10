@@ -1,0 +1,169 @@
+# Makefile.common
+#     Contains the stuff from Makefile.am and Makefile.nmake that is
+#     a) common to both files and
+#     b) portable between both files
+#
+# $Id: Makefile.common 43275 2012-06-15 18:18:07Z gerald $
+#
+# Wireshark - Network traffic analyzer
+# By Gerald Combs <gerald@wireshark.org>
+# Copyright 1998 Gerald Combs
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+#
+include Makefile_custom.common
+
+# Generated header files that we want in the distribution.
+GENERATED_HEADER_FILES =
+
+# Generated header files that we don't want in the distribution.
+GENERATED_NODIST_HEADER_FILES = \
+	ui_main_window.h
+
+# Generated C source files that we want in the distribution.
+GENERATED_C_FILES =
+
+DIRTY_GENERATED_C_FILES =
+
+# Generated C source files that we don't want in the distribution.
+GENERATED_NODIST_C_FILES =
+
+# Generated C++ source files that we want in the distribution.
+GENERATED_CPP_FILES =
+
+# Generated C++ source files that we don't want in the distribution.
+GENERATED_NODIST_CPP_FILES = \
+	$(MOC_SRC) \
+	$(QRC_SRC)
+
+# All the generated files we want in the distribution.
+GENERATED_FILES = \
+	$(GENERATED_HEADER_FILES) \
+	$(GENERATED_C_FILES) \
+	$(GENERATED_CPP_FILES) \
+	$(DIRTY_GENERATED_C_FILES)
+
+# All the generated files we don't want in the distribution.
+GENERATED_NODIST_FILES = \
+	$(GENERATED_NODIST_HEADER_FILES) \
+	$(GENERATED_NODIST_C_FILES) \
+	$(GENERATED_NODIST_CPP_FILES)
+
+# Files that generate compileable files
+GENERATOR_FILES =
+
+#
+# Headers that have to be run through moc.
+#
+MOC_HDRS = \
+	byte_view_tab.h \
+	byte_view_text.h \
+	capture_file_dialog.h \
+	capture_info_dialog.h \
+	capture_interface_dialog.h \
+	color_dialog.h \
+	color_utils.h \
+	display_filter_combo.h \
+	display_filter_edit.h \
+	fileset_dialog.h \
+	interface_tree.h \
+	label_stack.h \
+	main_status_bar.h \
+	main_welcome.h \
+	main_window.h \
+	monospace_font.h \
+	packet_list.h \
+	packet_list_model.h \
+	progress_dialog.h \
+	proto_tree.h \
+	recent_file_status.h \
+	simple_dialog_qt.h \
+	wireshark_application.h
+
+#
+# The .moc.cpp files generated from them.
+# We do *not* include these in the distribution; if you have the Qt SDK
+# installed, so that you can build Qt-based applications, you have moc
+# installed.
+#
+MOC_SRC = $(MOC_HDRS:.h=.moc.cpp)
+
+#
+# .qrc files.
+#
+# Should QRC_FILES or QRC_SRC depend on QRC_IMAGES?
+QRC_IMAGES = \
+	capture_start_24.png		\
+	capture_start_active_24.png	\
+	capture_stop_24.png		\
+	dfilter_apply_hover.png		\
+	dfilter_apply_normal.png	\
+	dfilter_apply_pressed.png	\
+	dfilter_bookmark_hover.png	\
+	dfilter_bookmark_normal.png	\
+	dfilter_bookmark_pressed.png	\
+	dfilter_dropdown.png		\
+	dfilter_erase_active.png	\
+	dfilter_erase_normal.png	\
+	dfilter_erase_selected.png	\
+	dfilter_refresh_active.png	\
+	dfilter_refresh_normal.png
+
+QRC_FILES = \
+	display_filter.qrc \
+	i18n.qrc \
+	toolbar.qrc \
+	welcome.qrc
+
+#
+# The .rcc.cpp files generated from them.
+# We do *not* include these in the distribution; if you have the Qt SDK
+# installed, so that you can build Qt-based applications, you have moc
+# installed.
+#
+QRC_SRC = $(QRC_FILES:.qrc=.rcc.cpp)
+
+WIRESHARK_QT_SRC = \
+	byte_view_tab.cpp \
+	byte_view_text.cpp \
+	capture_file_dialog.cpp \
+	capture_info_dialog.cpp \
+	capture_interface_dialog.cpp \
+	color_dialog.cpp \
+	color_utils.cpp \
+	display_filter_combo.cpp \
+	display_filter_edit.cpp \
+	fileset_dialog.cpp \
+	interface_tree.cpp \
+	label_stack.cpp \
+	main_status_bar.cpp \
+	main_welcome.cpp \
+	main_window.cpp \
+	monospace_font.cpp \
+	packet_list.cpp \
+	packet_list_model.cpp \
+	packet_list_record.cpp \
+	progress_dialog.cpp \
+	proto_tree.cpp \
+	qt_ui_utils.cpp \
+	recent_file_status.cpp \
+	simple_dialog_qt.cpp \
+	wireshark_application.cpp
+
+noinst_HEADERS = \
+	$(MOC_HDRS) \
+	packet_list_record.h \
+	qt_ui_utils.h
